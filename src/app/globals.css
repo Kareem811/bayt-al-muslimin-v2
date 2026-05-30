@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core palette */
+  --color-bg: #faf6ef;
+  --color-bg-elevated: #ffffff;
+  --color-ink: #0b1b26;
+  --color-ink-muted: #4f6470;
+
+  --color-primary-50: #effaf7;
+  --color-primary-100: #d9f1e8;
+  --color-primary-200: #b3e3d2;
+  --color-primary-300: #7fcdb5;
+  --color-primary-400: #44ad94;
+  --color-primary-500: #1d7874;
+  --color-primary-600: #155e60;
+  --color-primary-700: #114b4f;
+  --color-primary-800: #0f4c5c;
+  --color-primary-900: #082730;
+
+  --color-accent-300: #f0c896;
+  --color-accent-400: #e3b27a;
+  --color-accent-500: #d4a574;
+  --color-accent-600: #b08658;
+  --color-accent-700: #8a6741;
+
+  /* Fonts (wired by next/font in layout.tsx) */
+  --font-sans: var(--font-cairo), system-ui, sans-serif;
+  --font-quran: var(--font-amiri), "Amiri", serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+body {
+  background: linear-gradient(180deg, var(--color-bg) 0%, #f3ece0 100%);
+  min-height: 100vh;
+}
+
+.font-quran {
+  font-family: var(--font-quran);
+  letter-spacing: 0.01em;
+  line-height: 2.4;
+}
+
+@layer utilities {
+  .glass {
+    background: color-mix(in srgb, white 70%, transparent);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--color-primary-800) 8%, transparent);
+  }
+  .glass-dark {
+    background: color-mix(in srgb, var(--color-primary-900) 75%, transparent);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid color-mix(in srgb, white 10%, transparent);
+  }
+  .text-gradient-gold {
+    background: linear-gradient(120deg, var(--color-accent-500), var(--color-accent-300));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary-300) transparent;
+  }
+}
+
+/* Hide scrollbars on small reveal areas */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* react-h5-audio-player tweaks */
+.rhap_container {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.rhap_main-controls-button,
+.rhap_volume-button,
+.rhap_repeat-button { color: white !important; }
+.rhap_progress-indicator,
+.rhap_volume-indicator { background: var(--color-accent-500) !important; }
+.rhap_progress-filled,
+.rhap_volume-bar { background-color: var(--color-accent-500) !important; }
+.rhap_time { color: rgba(255,255,255,0.85) !important; font-size: 12px !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
