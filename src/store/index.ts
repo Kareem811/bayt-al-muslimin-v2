@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import audioReducer from "./slices/audioSlice";
-import reciterReducer from "./slices/reciterSlice";
 import settingsReducer from "./slices/settingsSlice";
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       audio: audioReducer,
-      reciter: reciterReducer,
       settings: settingsReducer,
     },
   });

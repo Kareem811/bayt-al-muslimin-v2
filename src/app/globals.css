@@ -79,6 +79,14 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+@keyframes slide-up-in {
+  from { opacity: 0; transform: translateY(120%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up-in {
+  animation: slide-up-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* react-h5-audio-player tweaks */
 .rhap_container {
   background: transparent !important;

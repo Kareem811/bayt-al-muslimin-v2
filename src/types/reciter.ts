@@ -26,10 +26,3 @@ export interface ReciterDirectoryResponse {
   reciters: Reciter[];
   suwar: RecitedSurah[];
 }
-
-export interface PlaylistItem {
-  id: number;
-  name: string;
-  audioUrl: string;
-  makkia: number;
-}

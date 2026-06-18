@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoBook, IoHome, IoPeopleSharp, IoTimeSharp, IoMenu } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
-import { MdSpeakerNotes } from "react-icons/md";
+import { MdSpeakerNotes, MdPodcasts } from "react-icons/md";
 import { cn } from "@/lib/utils/cn";
 import { MobileMenu } from "./MobileMenu";
 
@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: "/", label: "الرئيسية", icon: IoHome, match: ["/"] },
   { href: "/mushaf", label: "المصحف", icon: IoBook, match: ["/mushaf"] },
   { href: "/quraa", label: "القراء", icon: IoPeopleSharp, match: ["/quraa"] },
+  { href: "/podcast", label: "بودكاست", icon: MdPodcasts, match: ["/podcast"] },
   { href: "/hadith", label: "الأحاديث", icon: MdSpeakerNotes, match: ["/hadith"] },
   { href: "/prayer-times", label: "مواقيت الصلاة", icon: IoTimeSharp, match: ["/prayer-times"] },
 ];

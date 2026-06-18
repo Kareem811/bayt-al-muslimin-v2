@@ -31,20 +31,30 @@ export function AyahList({
       </div>
 
       <div className="rounded-3xl bg-white border border-[var(--color-primary-100)] p-6 md:p-10 shadow-sm">
-        <p className="font-quran text-2xl md:text-3xl leading-loose text-justify text-[var(--color-primary-900)] selection:bg-[var(--color-accent-300)] selection:text-[var(--color-primary-900)]">
+        <p
+          className="font-quran text-2xl md:text-3xl leading-loose text-justify [text-align-last:center] text-[var(--color-primary-900)] selection:bg-[var(--color-accent-300)] selection:text-[var(--color-primary-900)]"
+          dir="rtl"
+        >
           {ayahs.map((ayah, idx) => (
-            <button
+            <span
               key={ayah.aya || idx}
-              type="button"
+              role="button"
+              tabIndex={0}
               onClick={() => setSelected(ayah)}
-              className="inline cursor-pointer hover:text-[var(--color-primary-600)] focus:outline-none focus:bg-[var(--color-accent-300)]/40 rounded transition-colors"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelected(ayah);
+                }
+              }}
+              className="cursor-pointer hover:text-[var(--color-primary-600)] focus:outline-none focus-visible:bg-[var(--color-accent-300)]/40 rounded transition-colors"
               aria-label={`عرض تفسير الآية ${ayah.aya}`}
             >
-              <span>{ayah.arabic_text}</span>
+              {ayah.arabic_text}
               <span className="inline-grid place-items-center mx-1 align-middle w-8 h-8 md:w-9 md:h-9 rounded-full bg-[var(--color-primary-50)] text-[var(--color-primary-700)] border border-[var(--color-primary-200)] text-sm md:text-base font-sans">
                 {toArabicNumerals(ayah.aya)}
               </span>{" "}
-            </button>
+            </span>
           ))}
         </p>
       </div>

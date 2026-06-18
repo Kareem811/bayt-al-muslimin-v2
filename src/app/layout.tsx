@@ -5,6 +5,7 @@ import { Providers } from "@/store/Providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
+import { KahfReminder } from "@/components/layout/KahfReminder";
 import { publicConfig } from "@/lib/api/endpoints";
 
 const cairo = Cairo({
@@ -63,6 +64,7 @@ export default function RootLayout({
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
           <AudioPlayer />
+          <KahfReminder />
         </Providers>
       </body>
     </html>

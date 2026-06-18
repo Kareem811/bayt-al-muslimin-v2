@@ -1,28 +1,30 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { IoMdArrowDropleftCircle } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { play } from "@/store/slices/audioSlice";
-import {
-  setReciter,
-  setMoshafIndex,
-  setCurrentIndex,
-} from "@/store/slices/reciterSlice";
+import { playQueue, type AudioTrack } from "@/store/slices/audioSlice";
 import { toArabicNumerals } from "@/lib/utils/arabic-numbers";
 import { cn } from "@/lib/utils/cn";
-import type { Reciter, RecitedSurah, PlaylistItem } from "@/types/reciter";
+import type { Reciter, RecitedSurah } from "@/types/reciter";
 
 interface ReciterPlayerProps {
   reciter: Reciter;
   suwar: RecitedSurah[];
 }
 
-function buildPlaylist(
+interface RecitedItem {
+  id: number;
+  name: string;
+  makkia: number;
+  src: string;
+}
+
+function buildItems(
   reciter: Reciter,
   moshafIndex: number,
   suwar: RecitedSurah[],
-): PlaylistItem[] {
+): RecitedItem[] {
   const moshaf = reciter.moshaf[moshafIndex];
   if (!moshaf) return [];
   const allowed = new Set(
@@ -34,43 +36,39 @@ function buildPlaylist(
       id: s.id,
       name: s.name,
       makkia: s.makkia,
-      audioUrl: `${moshaf.server}${String(s.id).padStart(3, "0")}.mp3`,
+      src: `${moshaf.server}${String(s.id).padStart(3, "0")}.mp3`,
     }));
 }
 
 export function ReciterPlayer({ reciter, suwar }: ReciterPlayerProps) {
   const dispatch = useAppDispatch();
   const [moshafIdx, setMoshafIdx] = useState(0);
-  const currentReciter = useAppSelector((s) => s.reciter.current);
-  const currentIndex = useAppSelector((s) => s.reciter.currentIndex);
+  const playingContext = useAppSelector((s) => s.audio.context);
+  const playingIndex = useAppSelector((s) => s.audio.index);
 
-  const playlist = useMemo(
-    () => buildPlaylist(reciter, moshafIdx, suwar),
+  const context = `reciter:${reciter.id}:${moshafIdx}`;
+
+  const items = useMemo(
+    () => buildItems(reciter, moshafIdx, suwar),
     [reciter, moshafIdx, suwar],
   );
 
-  useEffect(() => {
-    dispatch(setReciter({ reciter, playlist }));
-  }, [reciter, dispatch, playlist]);
-
-  useEffect(() => {
-    dispatch(setMoshafIndex({ index: moshafIdx, playlist }));
-  }, [moshafIdx, playlist, dispatch]);
+  const queue = useMemo<AudioTrack[]>(
+    () =>
+      items.map((s) => ({
+        src: s.src,
+        title: `سورة ${s.name}`,
+        subtitle: `الشيخ ${reciter.name}`,
+      })),
+    [items, reciter.name],
+  );
 
   const handlePlay = (index: number) => {
-    const item = playlist[index];
-    if (!item) return;
-    dispatch(setCurrentIndex(index));
-    dispatch(
-      play({
-        src: item.audioUrl,
-        title: `سورة ${item.name}`,
-        subtitle: `الشيخ ${reciter.name}`,
-      }),
-    );
+    if (!queue[index]) return;
+    dispatch(playQueue({ queue, index, context }));
   };
 
-  const playingHere = currentReciter?.id === reciter.id;
+  const playingHere = playingContext === context;
 
   return (
     <>
@@ -103,8 +101,8 @@ export function ReciterPlayer({ reciter, suwar }: ReciterPlayerProps) {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {playlist.map((s, idx) => {
-          const isActive = playingHere && currentIndex === idx;
+        {items.map((s, idx) => {
+          const isActive = playingHere && playingIndex === idx;
           return (
             <button
               key={s.id}
