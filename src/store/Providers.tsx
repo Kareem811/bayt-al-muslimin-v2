@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react";
 import { Provider } from "react-redux";
 import { makeStore, type AppStore } from "./index";
-import { setCity, markHydrated } from "./slices/settingsSlice";
+import { setCity, setFontScale, markHydrated } from "./slices/settingsSlice";
 import { findCity } from "@/lib/constants/cities";
 
 const CITY_STORAGE_KEY = "bayt-al-muslimin.city";
+const FONT_STORAGE_KEY = "bayt-al-muslimin.fontScale";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const storeRef = useRef<AppStore | null>(null);
@@ -20,15 +21,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem(CITY_STORAGE_KEY);
       if (stored) store.dispatch(setCity(findCity(stored)));
+      const storedScale = localStorage.getItem(FONT_STORAGE_KEY);
+      if (storedScale) store.dispatch(setFontScale(Number(storedScale)));
     } catch {
       /* ignore storage errors */
     }
     store.dispatch(markHydrated());
 
     const unsubscribe = store.subscribe(() => {
-      const city = store.getState().settings.city;
+      const settings = store.getState().settings;
       try {
-        localStorage.setItem(CITY_STORAGE_KEY, city.slug);
+        localStorage.setItem(CITY_STORAGE_KEY, settings.city.slug);
+        localStorage.setItem(FONT_STORAGE_KEY, String(settings.quranFontScale));
       } catch {
         /* ignore */
       }

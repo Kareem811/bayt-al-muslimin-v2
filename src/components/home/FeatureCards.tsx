@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { IoBook, IoPeopleSharp, IoTimeSharp } from "react-icons/io5";
-import { MdSpeakerNotes } from "react-icons/md";
+import { IoBook, IoPeopleSharp, IoTimeSharp, IoSparklesSharp, IoStarSharp, IoCompassSharp } from "react-icons/io5";
+import { MdSpeakerNotes, MdPodcasts, MdTouchApp } from "react-icons/md";
 import type { IconType } from "react-icons";
 
 interface Feature {
@@ -22,6 +22,36 @@ const FEATURES: Feature[] = [
     href: "/quraa",
     Icon: IoPeopleSharp,
     description: "استمع لتلاوات نخبة من قراء العالم الإسلامي.",
+  },
+  {
+    label: "أذكار الصباح والمساء",
+    href: "/adhkar",
+    Icon: IoSparklesSharp,
+    description: "حصّن نفسك بأذكار اليوم والليلة مع متابعة التكرار.",
+  },
+  {
+    label: "المسبحة",
+    href: "/tasbeeh",
+    Icon: MdTouchApp,
+    description: "سبّح واذكر الله مع حفظ عدّك تلقائياً.",
+  },
+  {
+    label: "أسماء الله الحسنى",
+    href: "/asma-allah",
+    Icon: IoStarSharp,
+    description: "تعرّف على أسماء الله الحسنى ومعانيها.",
+  },
+  {
+    label: "اتجاه القبلة",
+    href: "/qibla",
+    Icon: IoCompassSharp,
+    description: "حدّد اتجاه الكعبة المشرّفة من موقعك.",
+  },
+  {
+    label: "بودكاست",
+    href: "/podcast",
+    Icon: MdPodcasts,
+    description: "إذاعات القرآن الكريم بثًّا مباشرًا على مدار الساعة.",
   },
   {
     label: "مواقيت الصلاة",

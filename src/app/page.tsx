@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/Hero";
 import { FeatureCards } from "@/components/home/FeatureCards";
+import { ContinueReading } from "@/components/home/ContinueReading";
 import { RandomAyah } from "@/components/home/RandomAyah";
 import { PrayerTimesStrip } from "@/components/prayer/PrayerTimesStrip";
 
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ContinueReading />
       <FeatureCards />
       <PrayerTimesStrip />
       <RandomAyah />

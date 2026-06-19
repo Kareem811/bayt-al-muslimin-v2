@@ -44,7 +44,7 @@ export function AudioPlayer() {
         </div>
 
         <div className="flex-1 min-w-0">
-          <H5AudioPlayer src={audio.src} autoPlay showSkipControls={false} showJumpControls={false} customAdditionalControls={[]} customVolumeControls={[]} layout="horizontal-reverse" />
+          <H5AudioPlayer src={audio.src} autoPlay showSkipControls={false} showJumpControls={false} customAdditionalControls={[]} customVolumeControls={[]} layout="horizontal-reverse" onEnded={() => hasNext && dispatch(playIndex(audio.index + 1))} />
         </div>
 
         <div className="flex items-center gap-1 md:gap-2 justify-center">
